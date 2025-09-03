@@ -10,11 +10,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - dir: qt5
-            qt_version: "5.15.2"
-            env_var: Qt5_DIR
           - dir: qt6
-            qt_version: "6.5.2"
+            qt_version: "6.8.0"
             env_var: Qt6_DIR
     steps:
       - uses: actions/checkout@v3
