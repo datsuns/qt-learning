@@ -1,0 +1,37 @@
+name: Test Qt setup scripts
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        include:
+          - dir: qt5
+            qt_version: "5.15.2"
+            env_var: Qt5_DIR
+          - dir: qt6
+            qt_version: "6.5.2"
+            env_var: Qt6_DIR
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create fake Qt installation
+        shell: pwsh
+        run: |
+          $qtBase = "C:\\Qt\\${{ matrix.qt_version }}\\msvc2019_64"
+          New-Item -ItemType Directory -Path "$qtBase\\bin" -Force | Out-Null
+      - name: Run setup script
+        shell: pwsh
+        run: |
+          & .\${{ matrix.dir }}\setup.ps1 -QtVersion ${{ matrix.qt_version }} -Compiler msvc2019_64 -InstallPath C:\Qt
+          $val = [Environment]::GetEnvironmentVariable("${{ matrix.env_var }}", "User")
+          if (-not $val) { throw "${{ matrix.env_var }} not set" }
+          "${{ matrix.env_var }}=$val" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Verify environment variable
+        shell: pwsh
+        run: |
+          if (-not $env:${{ matrix.env_var }}) { throw "${{ matrix.env_var }} not set" }
+          Write-Host "${{ matrix.env_var }}: $env:${{ matrix.env_var }}"
