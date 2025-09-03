@@ -1,7 +1,7 @@
 param(
     [string]$QtVersion = "5.15.2",
     [string]$Compiler = "msvc2019_64",
-    [string]$InstallPath = "C:\Qt"
+    [string]$InstallPath = "C:\Qt\qt5"
 )
 
 $qtBase = Join-Path $InstallPath "$QtVersion\$Compiler"
