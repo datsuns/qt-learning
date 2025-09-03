@@ -10,7 +10,7 @@ if (-not (Test-Path $qtBase)) {
     Write-Host "Qt $QtVersion ($Compiler) が $qtBase に見つかりません。" -ForegroundColor Yellow
     Write-Host "Qtのオンラインインストーラをダウンロードして起動します。セットアップ完了後に再度このスクリプトを実行してください。"
     $installer = Join-Path $env:TEMP "qt-online-installer.exe"
-    Invoke-WebRequest -Uri "https://download.qt.io/official_releases/online_installers/qt-unified-windows-x86-online.exe" -OutFile $installer
+    Invoke-WebRequest -Uri "https://download.qt.io/official_releases/online_installers/qt-unified-windows-x64-online.exe" -OutFile $installer
     Start-Process -FilePath $installer -Wait
 }
 
