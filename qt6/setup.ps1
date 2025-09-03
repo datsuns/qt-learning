@@ -1,5 +1,5 @@
 param(
-    [string]$QtVersion = "6.5.2",
+    [string]$QtVersion = "6.8.0",
     [string]$Compiler = "msvc2019_64",
     [string]$InstallPath = "C:\Qt\qt6"
 )
